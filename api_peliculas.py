@@ -11,7 +11,7 @@ api = Api(
     app,
     version='1.0',
     title='API PREDICCIÓN DE GÉNEROS DE PELÍCULAS',
-    description='Esta es una API que utiliza un modelo de clasificación para predecir los géneros de películas. Puede probar cuantas veces quiera y con cualquier ÍNDICE QUE EXISTA en el conjunto de prueba.'
+    description='Esta es una API que utiliza un modelo de clasificación para predecir los géneros de películas. Puede probar cuantas veces quiera y con cualquier índice que exista en el conjunto de prueba.'
 )
 
 ns = api.namespace('predict',
@@ -22,7 +22,7 @@ parser.add_argument(
     'índice',
     type=int,
     required=True,
-    help='Introduzca el número del ÍNDICE del conjunto de TEST que desea predecir con nuestro modelo',
+    help='Introduzca el número del índice del conjunto de TEST que desea predecir con nuestro modelo',
     location='args'
 )
 
@@ -46,11 +46,11 @@ class MovieGenresApi(Resource):
             top_genres, pred_probas = predict_genres(df_test, indice)
             
             # Convertir las probabilidades a una lista de listas
-            prob_list = [[genre, prob] for genre, prob in pred_probas.to_dict().items()]
+            prob_list = [[genre, float(prob)] for genre, prob in pred_probas.iloc[0].items()]
             
             return {
-                "Géneros Más Probables": top_genres,
-                "Probabilidades": prob_list
+                "TOP 3 de Géneros Más Probables": top_genres,
+                "Probabilidades por cada género": prob_list
             }, 200
         except ValueError as e:
             return {"error": str(e)}, 404
