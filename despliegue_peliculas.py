@@ -12,7 +12,7 @@ def predict_genres(df_test, fila):
     preprocessor = model_data['preprocessor']
     all_genres = model_data['all_genres']
     
-    # Verificar si el índice existe en el DataFrame
+
     if fila not in df_test.index:
         raise ValueError(f'El índice {fila} no existe en el conjunto de testing.')
     
@@ -25,10 +25,10 @@ def predict_genres(df_test, fila):
     # Hacemos la predicción
     y_pred_proba = clf.predict_proba(transformacion)
     
-    # Crear un DataFrame con las probabilidades
+    
     prediccion = pd.DataFrame(y_pred_proba, columns=all_genres)
     
-    # Determinar los tres géneros más probables
+    # Determinamos los tres géneros más probables
     top_genres = sorted(
         [(genre, round(prob, 3)) for genre, prob in prediccion.iloc[0].items()],
         key=lambda x: x[1],
