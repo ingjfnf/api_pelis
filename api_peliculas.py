@@ -11,7 +11,7 @@ api = Api(
     app,
     version='1.0',
     title='API PREDICCIÓN DE GÉNEROS DE PELÍCULAS',
-    description='Esta es una API que utiliza un modelo de clasificación para predecir los géneros de películas. Puede probar cuantas veces quiera y con cualquier índice que exista en el conjunto de prueba.'
+    description='Esta es una API que utiliza un modelo de clasificación para predecir los géneros de películas. Puede probar cuantas veces quiera y con cualquier índice que exista en el conjunto de TESTING.'
 )
 
 ns = api.namespace('predict',
