@@ -27,8 +27,8 @@ parser.add_argument(
 )
 
 resource_fields = api.model('Resource', {
-    'Géneros Más Probables': fields.List(fields.String),
-    'Probabilidades': fields.Raw
+    'Géneros Más Probables': fields.List(fields.List(fields.Raw)),
+    'Probabilidades': fields.List(fields.List(fields.Raw))
 })
 
 @ns.route('/')
@@ -44,9 +44,13 @@ class MovieGenresApi(Resource):
 
         try:
             top_genres, pred_probas = predict_genres(df_test, indice)
+            
+            # Convertir las probabilidades a una lista de listas
+            prob_list = [[genre, prob] for genre, prob in pred_probas.to_dict().items()]
+            
             return {
                 "Géneros Más Probables": top_genres,
-                "Probabilidades": pred_probas.to_dict()
+                "Probabilidades": prob_list
             }, 200
         except ValueError as e:
             return {"error": str(e)}, 404
