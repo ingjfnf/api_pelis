@@ -51,7 +51,7 @@ class MovieGenresApi(Resource):
         try:
             top_genres, pred_probas = predict_genres(df_test, indice)
             
-            # Convertir las probabilidades a una lista de listas
+            # Convertimos las probabilidades a una lista de listas
             prob_list = [[genre, float(prob)] for genre, prob in pred_probas.iloc[0].items()]
             
             return {
