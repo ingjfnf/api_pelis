@@ -17,7 +17,7 @@ def predict_genres(df_test, fila):
         raise ValueError(f'El índice {fila} no existe en el conjunto de testing.')
     
     # Seleccionamos la fila que queremos predecir
-    dato = df_test.loc[[fila]]
+    dato = df_test.loc[[fila], ['title', 'plot', 'year']]
     
     # Aplicamos la transformación al dato de entrada usando el preprocesador
     transformacion = preprocessor.transform(dato)
@@ -35,7 +35,7 @@ def predict_genres(df_test, fila):
         reverse=True
     )[:3]
 
-    return top_genres, prediccion.T
+    return top_genres, prediccion
 
 if __name__ == "__main__":
 
@@ -50,6 +50,6 @@ if __name__ == "__main__":
             print(f'Los 3 géneros predichos con más alta probabilidad para la película del ID: {fila} del conjunto de prueba son: {top_genres}')
             print("------------------------------------------------------------------------------------------")
             print("------------------------------------------------------------------------------------------")
-            print(f'Datos de probabilidad por género para la película del ID {fila} del conjunto de prueba:\n\n{pred_probas}')
+            print(f'Datos de probabilidad por género para la película del ID {fila} del conjunto de prueba:\n\n{pred_probas.T}')
         except ValueError as e:
             print(e)
